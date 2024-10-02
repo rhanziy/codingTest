@@ -66,4 +66,71 @@ var romanToInt = function (s) {
   return sum;
 };
 
-romanToInt("MCMXCIV");
+/**
+ * @param {string[]} strs
+ * @return {string}
+ */
+var longestCommonPrefix = function (strs) {
+  // 첫번째 문자열 기준
+  let prefix = strs[0];
+
+  for (let i = 0; i < strs.length; i++) {
+    // 두번째 문자열 부터 반복, 기준 문자열에 포함되지 않으면 기준 문자열 뒤에서부터 1씩 자름
+    while (strs[i].indexOf(prefix) !== 0) {
+      prefix = prefix.slice(0, prefix.length - 1);
+      if (prefix === "") return "";
+    }
+  }
+
+  return prefix;
+};
+
+// 가장 짧은 문자열 기준으로 비교하는 풀이
+function longestCommonPrefix(strs: string[]): string {
+  if (strs.length === 0) return "";
+
+  let shortestStr = strs.reduce((shortest, current) =>
+    current.length < shortest.length ? current : shortest
+  );
+
+  for (let i = 0; i < shortestStr.length; i++) {
+    const char = shortestStr[i];
+
+    for (let j = 0; j < strs.length; j++) {
+      if (strs[j][i] !== char) {
+        return shortestStr.slice(0, i);
+      }
+    }
+  }
+
+  return shortestStr;
+}
+
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+// stack 활용한 브라켓 pair 검증
+var isValid = function (s) {
+  // 후입선출 자료구조
+  const stack = [];
+  // 닫는괄호가 나오면 stack에 쌓인 열린괄호와 비교 ㅠㅠ
+  const map = {
+    ")": "(",
+    "}": "{",
+    "]": "[",
+  };
+
+  for (let char of s) {
+    if (char in map) {
+      const element = stack.length > 0 ? stack.pop() : "#";
+      if (element !== map[char]) {
+        return false;
+      }
+    } else {
+      stack.push(char);
+    }
+  }
+
+  return stack.length === 0;
+};
