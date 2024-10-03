@@ -86,7 +86,7 @@ var longestCommonPrefix = function (strs) {
 };
 
 // 가장 짧은 문자열 기준으로 비교하는 풀이
-function longestCommonPrefix(strs: string[]): string {
+function longestCommonPrefix(strs) {
   if (strs.length === 0) return "";
 
   let shortestStr = strs.reduce((shortest, current) =>
@@ -114,7 +114,7 @@ function longestCommonPrefix(strs: string[]): string {
 var isValid = function (s) {
   // 후입선출 자료구조
   const stack = [];
-  // 닫는괄호가 나오면 stack에 쌓인 열린괄호와 비교 ㅠㅠ
+  // 닫는괄호가 나오면 stack에 쌓인 제일 최근 열린괄호와 비교 ㅠㅠ
   const map = {
     ")": "(",
     "}": "{",
@@ -133,4 +133,41 @@ var isValid = function (s) {
   }
 
   return stack.length === 0;
+};
+
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ */
+
+// 주어진 정렬된 배열에 target 위치 설정. 이진탐색알고리즘
+var searchInsert = function (nums, target) {
+  let L = 0;
+  let R = nums.length - 1;
+
+  while (L <= R) {
+    let M = Math.floor((L + R) / 2);
+    if (nums[M] === target) {
+      return M;
+    } else if (nums[M] < target) {
+      L = M + 1;
+    } else {
+      R = M - 1;
+    }
+  }
+
+  return L;
+};
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+// 문자열을 공백기준으로 자르고 배열의 마지막 문자열 갯수 출력
+var lengthOfLastWord = function (s) {
+  const ss = s.trim();
+  const split = ss.split(" ");
+
+  return split[split.length - 1].length;
 };
