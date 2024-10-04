@@ -171,3 +171,51 @@ var lengthOfLastWord = function (s) {
 
   return split[split.length - 1].length;
 };
+
+/**
+ * @param {number[]} digits
+ * @return {number[]}
+ */
+// 숫자배열을 문자열 join메서드를 통해 합친 후 number형변환해서 + 1, 다시 숫자 배열로 변환
+var plusOne = function (digits) {
+  const addJoin = Number(digits.join("")) + 1;
+
+  return Array.from(String(addJoin), Number);
+};
+
+/**
+ * @param {number[]} digits
+ * @return {number[]}
+ */
+// 주어진 숫자배열의 마지막자리에 1을 더한 후 리턴... carry
+var plusOne = function (digits) {
+  // 뒤에서부터 1씩 더하기. 9보다 작으면 1을 더한 후 바로 리턴
+  for (let i = digits.length - 1; i >= 0; i--) {
+    if (digits[i] < 9) {
+      digits[i] += 1;
+      return digits;
+    }
+    digits[i] = 0;
+  }
+
+  digits.unshift(1);
+
+  return digits;
+};
+
+// 주어진 배열 안에 없는 가장 큰 양수
+function solution(A) {
+  A = A.filter((num) => num > 0);
+
+  A.sort((a, b) => a - b);
+
+  let target = 1;
+
+  for (let i = 0; i < A.length; i++) {
+    if (A[i] === target) {
+      target++;
+    }
+  }
+
+  return target;
+}
